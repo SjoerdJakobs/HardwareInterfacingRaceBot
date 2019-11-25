@@ -10,8 +10,14 @@ public class StateMachine extends StandardObject
 {
     private Map<StateID, State> states = new HashMap<StateID, State>();
 
-    /** een verwijzing naar de huidige staat waarin we verkeren */
-    private State currentState;
+    public State currentState;
+
+    public double getDeltaTime()
+    {
+        return deltaTime;
+    }
+
+    private double deltaTime;
 
 
     public StateMachine(FrameworkProgram frameworkProgram) {
@@ -22,13 +28,15 @@ public class StateMachine extends StandardObject
         super(frameworkProgram, usesInput, usesMain, usesRenderer, startsActivated);
 
         System.out.println("lowest");
-
     }
 
     @Override
     protected void mainLoop(double deltaTime) {
         super.mainLoop(deltaTime);
+        this.deltaTime = deltaTime;
         if(currentState != null){
+
+            //System.out.println("executeState" + currentState.stateID);
             currentState.CheckForStateSwitch();
             currentState.logic();
         }
@@ -67,6 +75,7 @@ public class StateMachine extends StandardObject
             //throw exception
             return;
         }
+        state.stateMachine = this;
         states.put( stateID, state );
     }
 }

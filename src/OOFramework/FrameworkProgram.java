@@ -71,6 +71,15 @@ public class FrameworkProgram
                     bo.sleep();
                 }
             }
+
+            try
+            {
+                Thread.sleep(10);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
