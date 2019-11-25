@@ -42,14 +42,14 @@ public class StateMachine extends StandardObject
         }
     }
 
-    public void SetState(StateID stateID) {
+    public void SetState(StateID stateID) throws IllegalArgumentException {
 
         /**
          *  if we dont know the state, we stop the function
          */
         if(!states.containsKey(stateID)) {
-            //throw exception
-            return;
+            throw new IllegalArgumentException("State unknown");
+            //return;
         }
         /**
          * if there is already a state running, run its leave method before a new state will start

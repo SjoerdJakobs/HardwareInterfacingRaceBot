@@ -17,5 +17,5 @@ public class Phototransistor {
 
     public int detectLightLevel() { return BoeBot.analogRead(pin); }
 
-    public boolean detectLine() { return BoeBot.analogRead(pin) > 1000 ? true : false; }
+    public boolean detectLine() { return (BoeBot.analogRead(pin) > 1350); }
 }
