@@ -2,5 +2,7 @@ package StateMachine;
 
 public enum StateID
 {
-    NullStateID;
+    NullStateID,
+    FindLine,
+    FollowLine;
 }

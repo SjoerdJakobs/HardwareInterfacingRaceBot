@@ -2,6 +2,7 @@ package Main;
 
 import Modules.Engine;
 import OOFramework.FrameworkProgram;
+import StateMachine.StateMachine;
 
 public class Program extends FrameworkProgram
 {
@@ -14,8 +15,8 @@ public class Program extends FrameworkProgram
     protected void start() {
         super.start();
         Engine engine = new Engine();
-        Remote remote = new Remote(this,true,false,false,true);
-        DriverAI driverAI = new DriverAI(this,true,false,false,true,engine,remote);
+        StateMachine stateMachine = new StateMachine(this);
+        DriverAI driverAI = new DriverAI(this,true,false,false,true,engine,stateMachine);
     }
 
     @Override

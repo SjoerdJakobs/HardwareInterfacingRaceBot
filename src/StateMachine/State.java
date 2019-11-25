@@ -2,7 +2,8 @@ package StateMachine;
 
 public class State
 {
-    protected StateID stateID;
+    public StateID      stateID;
+    public StateMachine stateMachine;
 
     protected State(StateID stateID)
     {

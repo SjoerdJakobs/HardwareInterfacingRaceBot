@@ -3,48 +3,38 @@ package Main;
 import Modules.Engine;
 import OOFramework.FrameworkProgram;
 import OOFramework.StandardObject;
+import StateMachine.*;
+import StateMachine.States.*;
 
 public class DriverAI extends StandardObject
 {
+    private StateMachine stateMachine;
     private Engine engine;
-    private Remote remote;
+
+    private FindLine findLineState;
+    private FollowLine followLineState;
 
     public DriverAI(FrameworkProgram frameworkProgram) {
         super(frameworkProgram);
     }
 
-    public DriverAI(FrameworkProgram frameworkProgram, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated, Engine engine, Remote remote) {
+    public DriverAI(FrameworkProgram frameworkProgram,
+                    boolean usesInput, boolean usesMain,
+                    boolean usesRenderer, boolean startsActivated,
+                    Engine engine, StateMachine stateMachine) {
+
         super(frameworkProgram, usesInput, usesMain, usesRenderer, startsActivated);
+        this.stateMachine = stateMachine;
         this.engine = engine;
-        this.remote = remote;
-        System.out.println("lowest");
 
+        MakeStates();
+        stateMachine.SetState(StateID.FindLine);
+        //System.out.println("the state should be started");
     }
 
-    private void driveForward()
-    {
-
-    }
-
-    @Override
-    protected void start() {
-        super.start();
-    }
-
-    @Override
-    protected void awake() {
-        super.awake();
-    }
-
-    @Override
-    protected void sleep()
-    {
-        super.sleep();
-    }
-
-    @Override
-    protected void inputLoop(double deltaTime) {
-        super.inputLoop(deltaTime);
+    void MakeStates() {
+        stateMachine.AddState( StateID.FindLine, new FindLine(StateID.FindLine,engine));
+        stateMachine.AddState( StateID.FollowLine, new FindLine(StateID.FollowLine,engine));
     }
 
     @Override
