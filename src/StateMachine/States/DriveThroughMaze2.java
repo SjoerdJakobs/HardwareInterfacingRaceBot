@@ -1,5 +1,6 @@
 package StateMachine.States;
 
+import Modules.NeoLed;
 import Modules.Ultrasonic;
 import Modules.Engine;
 import Modules.Phototransistor;
@@ -36,6 +37,9 @@ public class DriveThroughMaze2 extends State {
     Ultrasonic uLeft = new Ultrasonic(5, 4); //links
     Ultrasonic uMid = new Ultrasonic(7, 6); //midden
     Ultrasonic uRight = new Ultrasonic(9, 8); //rechts
+    NeoLed leftNeo = new NeoLed(0);
+    NeoLed midNeo = new NeoLed(1);
+    NeoLed rightNeo = new NeoLed(2);
 
     @Override
     protected void enter()
@@ -210,6 +214,17 @@ public class DriveThroughMaze2 extends State {
         }
 
         engine.drive();
+
+        // Neo LEDs
+        if (this.left) leftNeo.turnOn();
+        else leftNeo.turnOff();
+
+        if (this.forward) midNeo.turnOn();
+        else midNeo.turnOff();
+
+        if (this.right) rightNeo.turnOn();
+        else rightNeo.turnOff();
+
     }
 
     @Override
