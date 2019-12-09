@@ -28,7 +28,7 @@ public class DriverAI extends StandardObject
         this.engine = engine;
 
         MakeStates();
-        stateMachine.SetState(StateID.FindLine);
+        stateMachine.SetState(StateID.FollowLine);
         //System.out.println("the state should be started");
     }
 

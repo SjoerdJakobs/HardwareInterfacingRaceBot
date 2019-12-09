@@ -43,6 +43,7 @@ public class FindLine extends State
     private double counter = 7;
     private double counterLimit = 1;
     private double turnRate =  0.9;
+
     @Override
     protected void logic()
     {
@@ -84,6 +85,4 @@ public class FindLine extends State
         System.out.println("executeState");
         engine.SetTargetSpeed(0, 0);
     }
-
-
 }

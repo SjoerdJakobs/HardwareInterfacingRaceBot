@@ -6,13 +6,17 @@ public class Main
 {
     public static void main(String[] args)
     {
+        /*
+        Servo rightWheel    = new Servo(14);
+        Servo leftWheel     = new Servo(15);
 
-        //Servo rightWheel    = new Servo(12);
-        //Servo leftWheel     = new Servo(13);
+        rightWheel.update(1500);
+        leftWheel.update(1500);
 
-        //rightWheel.update(1490);
-        //leftWheel.update(1510);
-
+        while (true)
+        {
+            System.out.println("hey");
+        }*/
         Program program = new Program();
         program.run();
     }

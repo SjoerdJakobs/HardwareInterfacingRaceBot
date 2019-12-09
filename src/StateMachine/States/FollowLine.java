@@ -15,6 +15,8 @@ public class FollowLine extends State
     Phototransistor pin2 = new Phototransistor(2);
     Phototransistor pin3 = new Phototransistor(3);
 
+    int lastDetectedPin = 0;
+
     public FollowLine(StateID stateID, Engine engine)
     {
         super(stateID);
@@ -48,42 +50,66 @@ public class FollowLine extends State
     protected void logic()
     {
         super.logic();
-        if(pin1.detectLine()||pin2.detectLine())
+        if(pin1.detectLine()&&pin2.detectLine())
         {
+            System.out.println("pin 1 and 2");
             engine.Steer(true, 0);
-            engine.SetTargetSpeed(550, 0);
+            engine.SetTargetSpeed(500, 0);
+        }
+        else if(pin0.detectLine()&&pin1.detectLine())
+        {
+            System.out.println("pin 0 and 1");
+            engine.Steer(true, 0.8);
+
+            engine.SetTargetSpeed(200, 0);
+        }
+        else if(pin2.detectLine()&&pin3.detectLine())
+        {
+            System.out.println("pin 2 and 3");
+            engine.Steer(false, 0.8);
+            engine.SetTargetSpeed(200, 0);
         }
         else if(pin2.detectLine())
         {
-            engine.Steer(false, 0.6);
+            System.out.println("pin 2");
+            engine.Steer(false, 0.70);
             engine.SetTargetSpeed(200, 0);
+            lastDetectedPin = 2;
         }
         else if(pin1.detectLine())
         {
-            engine.Steer(true, 0.6);
+            System.out.println("pin 1");
+            engine.Steer(true, 0.70);
             engine.SetTargetSpeed(200, 0);
-        }
-        else if(pin0.detectLine()||pin1.detectLine())
-        {
-            engine.Steer(true, 0.75);
-
-            engine.SetTargetSpeed(100, 0);
-        }
-        else if(pin2.detectLine()||pin3.detectLine())
-        {
-            engine.Steer(false, 0.75);
-            engine.SetTargetSpeed(100, 0);
+            lastDetectedPin = 1;
         }
         else if(pin3.detectLine())
         {
-            engine.Steer(false, 0.99);
-            engine.SetTargetSpeed(50, 0);
+            System.out.println("pin 3");
+            engine.Steer(false, 1.6);
+            engine.SetTargetSpeed(200, 0);
+            lastDetectedPin = 3;
         }
         else if(pin0.detectLine())
         {
-            engine.Steer(true, 0.99);
-            engine.SetTargetSpeed(50, 0);
+            System.out.println("pin 0");
+            engine.Steer(true, 1.6);
+            engine.SetTargetSpeed(200, 0);
+            lastDetectedPin = 0;
         }
+        else if(lastDetectedPin == 2||lastDetectedPin == 3)
+        {
+            System.out.println("last pin 2 or 3");
+            engine.Steer(false, 1.2);
+            engine.SetTargetSpeed(200, 0);
+        }
+        else if(lastDetectedPin == 1 || lastDetectedPin == 0)
+        {
+            System.out.println("last pin 1 or 0");
+            engine.Steer(true, 1.2);
+            engine.SetTargetSpeed(200, 0);
+        }
+
         engine.drive();
     }
 

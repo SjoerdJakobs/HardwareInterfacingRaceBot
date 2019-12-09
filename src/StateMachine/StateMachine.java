@@ -12,12 +12,8 @@ public class StateMachine extends StandardObject
 
     public State currentState;
 
-    public double getDeltaTime()
-    {
-        return deltaTime;
-    }
-
     private double deltaTime;
+    public double getDeltaTime() {return deltaTime; }
 
 
     public StateMachine(FrameworkProgram frameworkProgram) {
@@ -35,21 +31,20 @@ public class StateMachine extends StandardObject
         super.mainLoop(deltaTime);
         this.deltaTime = deltaTime;
         if(currentState != null){
-
             //System.out.println("executeState" + currentState.stateID);
             currentState.CheckForStateSwitch();
             currentState.logic();
         }
     }
 
-    public void SetState(StateID stateID) throws IllegalArgumentException {
+    public void SetState(StateID stateID)
+    {
 
         /**
          *  if we dont know the state, we stop the function
          */
         if(!states.containsKey(stateID)) {
             throw new IllegalArgumentException("State unknown");
-            //return;
         }
         /**
          * if there is already a state running, run its leave method before a new state will start
@@ -72,8 +67,7 @@ public class StateMachine extends StandardObject
     public void AddState(StateID stateID, State state) {
         if(states.containsKey(stateID))
         {
-            //throw exception
-            return;
+            throw new IllegalArgumentException("State unknown");
         }
         state.stateMachine = this;
         states.put( stateID, state );

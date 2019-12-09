@@ -10,8 +10,8 @@ public class Engine
         shouldDrive = true;
     }
 
-    Servo rightWheel    = new Servo(12);
-    Servo leftWheel     = new Servo(13);
+    Servo rightWheel    = new Servo(14);
+    Servo leftWheel     = new Servo(15);
 
     public int leftSpeed    = 0;
     public int rightSpeed   = 0;
@@ -46,14 +46,34 @@ public class Engine
     private void TakeCorner()
     {
         if (turnRate != 0) {
-            if (!left) {
-                rightSpeed = (int) (1500 - (currentSpeed * (turnRate+1)));
-                leftSpeed = (int) (1500 + (currentSpeed * (1-turnRate)));
-            }
-            else
+            if(turnRate > 1 && turnRate <= 2)
             {
-                rightSpeed = (int) (1500 - (currentSpeed * (1- turnRate)));
-                leftSpeed = (int) (1500 + (currentSpeed * (turnRate+1)));
+                //System.out.println("super turn");
+                if (!left) {
+                    rightSpeed = (int) (1500 - (currentSpeed * (1.6)));
+                    leftSpeed = (int) (1500 - (currentSpeed * (turnRate-1)));
+                } else {
+                    rightSpeed = (int) (1500 + (currentSpeed * (turnRate-1)));
+                    leftSpeed = (int) (1500 + (currentSpeed * (1.6)));
+                }
+                /*if (!left) {
+                    rightSpeed = (int) (1500 - (currentSpeed * ((turnRate-1)+ 1)));
+                    leftSpeed = (int) (1500 - (currentSpeed * (1 - (turnRate-1))));
+                } else {
+                    rightSpeed = (int) (1500 + (currentSpeed * (1 - (turnRate-1))));
+                    leftSpeed = (int) (1500 + (currentSpeed * ((turnRate-1) + 1)));
+                }*/
+            }
+            else if (turnRate <= 1)
+            {
+                //System.out.println("normal turn");
+                if (!left) {
+                    rightSpeed = (int) (1500 - (currentSpeed * (turnRate + 1)));
+                    leftSpeed = (int) (1500 + (currentSpeed * (1 - turnRate)));
+                } else {
+                    rightSpeed = (int) (1500 - (currentSpeed * (1 - turnRate)));
+                    leftSpeed = (int) (1500 + (currentSpeed * (turnRate + 1)));
+                }
             }
         }
     }
