@@ -1,8 +1,8 @@
 package StateMachine.States;
 
+import Modules.Ultrasonic;
 import Modules.Engine;
 import Modules.Phototransistor;
-import Modules.Ultrasonic;
 import StateMachine.State;
 import StateMachine.StateID;
 import TI.BoeBot;
@@ -17,18 +17,15 @@ public class DriveThroughMaze extends State {
 
     private boolean hasLine;
     private Engine engine;
-    private int direction = 0; // -1 = left, 0 = mid, 1 = right, 2 = go back!
     private boolean currentTurning = false;
-    private int numberOfTurns = 0;
 
     Phototransistor pin0 = new Phototransistor(0); // links
     Phototransistor pin1 = new Phototransistor(1);
     Phototransistor pin2 = new Phototransistor(2);
     Phototransistor pin3 = new Phototransistor(3); // rechts
-    Ultrasonic uLeft = new Ultrasonic(6); //links
-    Ultrasonic uMid = new Ultrasonic(7); //midden
-    Ultrasonic uRight = new Ultrasonic(8); //rechts
-
+    Ultrasonic uLeft = new Ultrasonic(4, 5); //links
+    Ultrasonic uMid = new Ultrasonic(6, 7); //midden
+    Ultrasonic uRight = new Ultrasonic(8, 9); //rechts
 
     @Override
     protected void enter()
@@ -54,21 +51,27 @@ public class DriveThroughMaze extends State {
         if (!currentTurning) {
 
             if (pin0.detectLine() && pin1.detectLine() && pin2.detectLine() && pin3.detectLine()) {
+                System.out.println("All lines detected.");
+
                 if (!uLeft.detectWall()) {
                     engine.Steer(true, 2);
                     currentTurning = true;
+                    System.out.println("Links geen muur gedetecteerd.");
                 }
                 else if (!uMid.detectWall()) {
                     engine.Steer(true, 0);
                     currentTurning = false;
+                    System.out.println("Rechtdoor geen muur gedecteerd.");
                 }
                 else if (!uRight.detectWall()) {
                     engine.Steer(false, 2);
                     currentTurning = true;
+                    System.out.println("Rechts geen muur gedetecteerd.");
                 }
                 else {
                     engine.Steer(false, 2);
                     currentTurning = true;
+                    System.out.println("Drie mure gedetecteerd.");
                 }
                 BoeBot.wait(1000); // To prevent the BoeBot from detecting the line when starting to turn
             }
@@ -104,10 +107,10 @@ public class DriveThroughMaze extends State {
             if (pin1.detectLine() || pin2.detectLine()) {
                 currentTurning = false;
                 engine.Steer(false, 0);
+                System.out.println("Twee middelste sensoren gedetecteerd.");
             }
 
         }
-
 
         engine.drive();
     }
