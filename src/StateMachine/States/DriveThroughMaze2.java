@@ -68,23 +68,32 @@ public class DriveThroughMaze2 extends State {
 
                 if(left&&right&&forward)
                 {
+                    //180
                     turn = 0;
+                    turnCounter = 0;
                 }
                 else if(left&&right)
                 {
+                    //0
                     turn = 1;
+                    turnCounter = 1;
                 }
                 else if(left&&forward)
                 {
-                    turn = 0;
+                    //90 right
+                    turn = 2;
+                    turnCounter = 0;
                 }
                 else if(forward&&right)
                 {
-                    turn = 2;
+                    //90 left
+                    turn = 3;
+                    turnCounter = 0;
                 }
                 else if(!left&&!right&&!forward)
                 {
-                    turn = 0;
+                    //0
+                    turn = 1;
                 }
                 hasLine = true;
                 currentTurning = true;
@@ -158,14 +167,31 @@ public class DriveThroughMaze2 extends State {
         if (currentTurning) {
             System.out.println("heyyyyy");
             engine.SetTargetSpeed(100, 0);
-            engine.Steer(false, 3);
-            if (pin3.detectLine())
+            if(turn == 2)
+            {
+                engine.Steer(false, 3);
+            }
+            else if(turn == 3)
+            {
+                engine.Steer(true, 3);
+            }
+            else if(turn == 0)
+            {
+                engine.Steer(false, 3);
+            }
+            if (pin3.detectLine()||pin0.detectLine())
             {
                 System.out.println("hasline");
                 if(!hasLine)
                 {
                     System.out.println("addcount");
-                    turnCounter = 1;
+                    if(turn == 0) {
+                        turn = 2;
+                    }
+                    else
+                    {
+                        turnCounter = 1;
+                    }
                 }
                 hasLine = true;
             }
