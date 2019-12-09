@@ -73,7 +73,7 @@ public class Ultrasonic {
     }
 
     public boolean detectWall() {
-        if (detectDistance() > 100) return true;
+        if (detectDistance() < 100) return true;
         else return false;
     }
 

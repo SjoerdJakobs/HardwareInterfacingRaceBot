@@ -27,6 +27,7 @@ public class DriveThroughMaze2 extends State {
     private boolean currentTurning = false;
 
     int lastDetectedPin = 0;
+    boolean hasline = false;
 
     Phototransistor pin0 = new Phototransistor(0); // links
     Phototransistor pin1 = new Phototransistor(1);
@@ -81,7 +82,13 @@ public class DriveThroughMaze2 extends State {
                 {
                     turn = 2;
                 }
+                else if(!left&&!right&&!forward)
+                {
+                    turn = 0;
+                }
+                hasLine = true;
                 currentTurning = true;
+                return;
             }
 
             if(pin1.detectLine()&&pin2.detectLine())
@@ -149,14 +156,27 @@ public class DriveThroughMaze2 extends State {
 
         // When turning, continue detecting a line after which the turning will stop
         if (currentTurning) {
+            System.out.println("heyyyyy");
             engine.SetTargetSpeed(100, 0);
             engine.Steer(false, 3);
-            if (pin0.detectLine()) {
-                turnCounter = 1;
+            if (pin3.detectLine())
+            {
+                System.out.println("hasline");
+                if(!hasLine)
+                {
+                    System.out.println("addcount");
+                    turnCounter = 1;
+                }
+                hasLine = true;
+            }
+            else {
+                hasLine = false;
             }
 
             if(turnCounter == 1) {
                 if (pin1.detectLine() || pin2.detectLine()) {
+
+                    System.out.println("wedone");
                     currentTurning = false;
                     turnCounter = 0;
                 }
