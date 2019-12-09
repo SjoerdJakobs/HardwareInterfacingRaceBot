@@ -72,5 +72,10 @@ public class Ultrasonic {
         return this.distance;
     }
 
+    public boolean detectWall() {
+        if (detectDistance() > 100) return true;
+        else return false;
+    }
+
     public int getDistance() { return this.distance; }
 }
