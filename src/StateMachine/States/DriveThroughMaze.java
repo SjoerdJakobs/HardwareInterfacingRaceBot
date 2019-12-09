@@ -53,17 +53,17 @@ public class DriveThroughMaze extends State {
             if (pin0.detectLine() && pin1.detectLine() && pin2.detectLine() && pin3.detectLine()) {
                 System.out.println("All lines detected.");
 
-                if (!uLeft.detectWall()) {
+                if (uLeft.getDistance() > 100) {
                     engine.Steer(true, 2);
                     currentTurning = true;
                     System.out.println("Links geen muur gedetecteerd.");
                 }
-                else if (!uMid.detectWall()) {
+                else if (uMid.getDistance() > 100) {
                     engine.Steer(true, 0);
                     currentTurning = false;
                     System.out.println("Rechtdoor geen muur gedecteerd.");
                 }
-                else if (!uRight.detectWall()) {
+                else if (uRight.getDistance() > 100) {
                     engine.Steer(false, 2);
                     currentTurning = true;
                     System.out.println("Rechts geen muur gedetecteerd.");

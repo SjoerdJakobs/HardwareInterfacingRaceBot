@@ -36,7 +36,7 @@ public class DriverAI extends StandardObject
     void MakeStates() {
         stateMachine.AddState( StateID.FindLine, new FindLine(StateID.FindLine,engine));
         stateMachine.AddState( StateID.FollowLine, new FollowLine(StateID.FollowLine,engine));
-        stateMachine.AddState( StateID.DriveThroughMaze, new DriveThroughMaze(StateID.DriveThroughMaze, engine));
+        stateMachine.AddState( StateID.DriveThroughMaze, new DriveThroughMaze2(StateID.DriveThroughMaze, engine));
     }
 
     @Override

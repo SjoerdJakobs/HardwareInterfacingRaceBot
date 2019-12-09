@@ -22,6 +22,9 @@ public class Engine
     public double turnRate          = 0;
     public double accelerateSpeed   = 0;
 
+    public double manualLeft = 0;
+    public double manualRight = 0;
+
 
     public boolean left;
     public boolean shouldDrive;
@@ -46,7 +49,16 @@ public class Engine
     private void TakeCorner()
     {
         if (turnRate != 0) {
-            if(turnRate > 1 && turnRate <= 2)
+            if (turnRate == 3) {
+                if (!left) {
+                    rightSpeed = (int) (1500 - (currentSpeed));
+                    leftSpeed = (int) (1500 - (currentSpeed));
+                } else {
+                    rightSpeed = (int) (1500 + (currentSpeed));
+                    leftSpeed = (int) (1500 + (currentSpeed));
+                }
+            }
+            else if(turnRate > 1 && turnRate <= 2)
             {
                 //System.out.println("super turn");
                 if (!left) {
@@ -76,6 +88,7 @@ public class Engine
                 }
             }
         }
+
     }
 
     private void ChangeSpeed()
@@ -112,6 +125,15 @@ public class Engine
     {
         this.left = left;
         this.turnRate = turnRate;
+        this.manualLeft = 0;
+        this.manualRight = 0;
+    }
+
+    public void ManualSteer(double leftVal, double rightVal)
+    {
+        this.turnRate = 0;
+        manualRight = rightVal;
+        manualLeft = leftVal;
     }
 }
 
